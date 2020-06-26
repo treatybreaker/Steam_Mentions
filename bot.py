@@ -91,7 +91,7 @@ def csv_write(file: str, players: dict):
 @client.event
 async def on_message(message: discord.Message):
     if message.channel.id in permitted_channels:
-        logger.info(f"Searching message from {message.author} in permitted channels for steam64s and profiles...")
+        logger.info(f"Searching message from {message.author} in {message.channel} for steam64s and profiles...")
         for word in message.content.split():
             if steam64 := await get_steam64(word):
                 logger.info(f"Found steam info: {steam64, word}.")
