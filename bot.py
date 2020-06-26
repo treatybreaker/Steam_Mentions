@@ -29,6 +29,7 @@ def read_json(file):
 
 
 config = read_json('config.json')
+
 google_sheets = pygsheets.authorize(service_file=config['google token path'])
 
 
@@ -105,7 +106,6 @@ async def on_message(message: discord.Message):
 
 async def add_report(steam64: int, profile: str):
     logger.info(f"Adding report for {profile}")
-    print(problem_players)
     if steam64 in problem_players.keys():
         problem_players[steam64]["Reported"] += 1
         problem_players[steam64]['Steam Profile'] = profile
@@ -116,4 +116,9 @@ async def add_report(steam64: int, profile: str):
 
 problem_players = read_csv(config['spreadsheet path'])
 
-client.run(config['discord token'])  # MUST HAVE A VALID DISCORD BOT TOKEN
+try:
+    client.run(config['discord token'])  # MUST HAVE A VALID DISCORD BOT TOKEN
+except discord.errors.LoginFailure:
+    logger.error("Could not login to discord!")
+except discord.errors.HTTPException:
+    logger.error("Invalid discord token provided, please check your token and try again!")
