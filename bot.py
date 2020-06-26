@@ -88,8 +88,6 @@ def csv_write(file: str, players: dict):
     sheet.sheet1.update_values(crange='A1', values=rows)
 
 
-
-
 @client.event
 async def on_message(message: discord.Message):
     if message.channel.id in permitted_channels:
@@ -107,6 +105,9 @@ async def on_message(message: discord.Message):
                     pass
 
 
+problem_players = read_csv(config['spreadsheet path'])
+
+
 async def add_report(steam64: int, profile: str):
     logger.info(f"Adding report for {profile}")
     if steam64 in problem_players.keys():
@@ -114,10 +115,8 @@ async def add_report(steam64: int, profile: str):
         problem_players[steam64]['Steam Profile'] = profile
     else:
         problem_players[steam64] = {"Steam Profile": profile, "Reported": 1}
-    csv_write(config['spreadsheet path'], problem players)
+    csv_write(config['spreadsheet path'], problem_players)
 
-
-problem_players = read_csv(config['spreadsheet path'])
 
 try:
     client.run(config['discord token'])  # MUST HAVE A VALID DISCORD BOT TOKEN
