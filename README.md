@@ -10,7 +10,8 @@ Once you have your token head over to config.json and place it into the discord 
 The spreadsheet path is the location of where you want a LOCAL (saved on your computer/server/whatever) csv to be saved to by the program.
 
 Set like so: "spreadsheet path": "C:\Users\yourname\Desktop\Steam_Mentions\player_reports.json"
-#Google Token
+
+# Google Token
 You can get a google token by following this guide: https://pygsheets.readthedocs.io/en/stable/authorization.html#service-account
 
 You'll want to follow the first four steps then skip down to: https://pygsheets.readthedocs.io/en/stable/authorization.html#service-account
