@@ -1,7 +1,7 @@
 {
-  "discord token": "",
+  "discord token": "NzIxMjk5Njk2MjQwNDI3MDA4.XvXqGQ.QPEDWHpzvvy7DyS4FFXiSYWmvss",
   "spreadsheet path": "player_reports.csv",
   "google token path": "google_token.json",
   "google spreadsheet name": "problem players",
-  "share with": ["example_email@hopefullyNotAValidDomain.com", "another_email@hopefullyNotAValidDomain.com"]
+  "share with": ["philler3138@gmail.com"]
 }

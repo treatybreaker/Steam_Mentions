@@ -31,6 +31,13 @@ def read_json(file):
 config = read_json('config.json')
 
 google_sheets = pygsheets.authorize(service_file=config['google token path'])
+try:
+    sheet = google_sheets.open(config['google spreadsheet name'])
+except pygsheets.exceptions.SpreadsheetNotFound:
+    sheet = google_sheets.create(config['google spreadsheet name'])
+
+known_users = [user['emailAddress'] for user in sheet.permissions]
+[sheet.share(email, role='writer') if email not in known_users else '' for email in config['share with']]
 
 
 @client.event
@@ -78,12 +85,8 @@ def csv_write(file: str, players: dict):
         for key, value in players.items():
             rows.append([str(key), value['Steam Profile'], value["Reported"]])
         write.writerows(rows)
-    try:
-        sheet = google_sheets.open(config['google spreadsheet name'])
-    except pygsheets.exceptions.SpreadsheetNotFound:
-        sheet = google_sheets.create(config['google spreadsheet name'])
     sheet.sheet1.update_values(crange='A1', values=rows)
-    [sheet.share(email, role='writer') for email in config['share with']]
+
 
 
 
@@ -111,7 +114,7 @@ async def add_report(steam64: int, profile: str):
         problem_players[steam64]['Steam Profile'] = profile
     else:
         problem_players[steam64] = {"Steam Profile": profile, "Reported": 1}
-    csv_write(config['spreadsheet path'], problem_players)
+    csv_write(config['spreadsheet path'], problem players)
 
 
 problem_players = read_csv(config['spreadsheet path'])
@@ -119,6 +122,6 @@ problem_players = read_csv(config['spreadsheet path'])
 try:
     client.run(config['discord token'])  # MUST HAVE A VALID DISCORD BOT TOKEN
 except discord.errors.LoginFailure:
-    logger.error("Could not login to discord!")
+    logger.error("Could not login to discord, check your discord token!")
 except discord.errors.HTTPException:
     logger.error("Invalid discord token provided, please check your token and try again!")
