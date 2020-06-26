@@ -27,3 +27,6 @@ Set like so: "google spreadsheet name": "problem players"
 Provide a list of emails that you'd like the spreadsheet shared with.
 
 Set like so: "share with": ["myemail@gmail.com", "anotheremail@genericcompany.com"]
+
+# Blocking Calls
+Discord.py wants the user to use non-blocking libraries, but due to the nature of how on_message events work in discord.py and what this script is doing on top of how unlikely it is one individual will bombard the channel with tons of copy paste non-sense for a few minutes straight, a blocking call will be safe to do in such a case. If the heartbeat stop exceeds 30 seconds, then there is a major issue and then it needs to be properly addressed.
