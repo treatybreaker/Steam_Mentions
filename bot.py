@@ -105,7 +105,6 @@ async def on_message(message: discord.Message):
 
 async def add_report(steam64: int, profile: str):
     logger.info(f"Adding report for {profile}")
-    print(problem_players)
     if steam64 in problem_players.keys():
         problem_players[steam64]["Reported"] += 1
         problem_players[steam64]['Steam Profile'] = profile
